@@ -1,38 +1,31 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { Groceries } from './groceries.model';
 import { GroceriesCategory } from './groceries-category.enum';
+import { CreateGroceriesDto } from './dto/create-groceries.dto';
+import { v4 as randomID } from 'uuid';
 
 @Injectable()
 export class GroceriesService {
-  groceries: Groceries[] = [
-    {
-      name: 'apple',
-      quantity: 3,
-      category: GroceriesCategory.PRODUCE,
-    },
-    {
-      name: 'milk',
-      quantity: 1,
-      category: GroceriesCategory.DAIRY,
-    },
-    {
-      name: 'chicken wing',
-      quantity: 12,
-      category: GroceriesCategory.MEAT,
-    },
-    {
-      name: 'bread',
-      quantity: 1,
-      category: GroceriesCategory.BAKED_GOODS,
-    },
-    {
-      name: 'chips',
-      quantity: 2,
-      category: GroceriesCategory.SNACKS,
-    },
-  ];
+  groceries: Groceries[] = [];
 
   getAllGroceries(): Groceries[] {
     return this.groceries;
+  }
+
+  createNewGrocery(createGroceriesDto: CreateGroceriesDto): Groceries {
+    const { name, quantity, category } = createGroceriesDto;
+    if (
+      !Object.values(GroceriesCategory).includes(GroceriesCategory[category])
+    ) {
+      throw new BadRequestException("That's not a valid category!");
+    }
+    const grocery = {
+      id: randomID(),
+      name,
+      quantity,
+      category,
+    };
+    this.groceries.push(grocery);
+    return grocery;
   }
 }
