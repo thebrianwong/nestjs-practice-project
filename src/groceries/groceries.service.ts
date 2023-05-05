@@ -1,4 +1,8 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { Groceries } from './groceries.model';
 import { GroceriesCategory } from './groceries-category.enum';
 import { CreateGroceriesDto } from './dto/create-groceries.dto';
@@ -32,5 +36,13 @@ export class GroceriesService {
 
   getGrocery(id: string): Groceries {
     return this.groceries.find((grocery) => grocery.id === id);
+  }
+
+  removeGrocery(id: string): void {
+    const groceryExists = this.getGrocery(id);
+    if (!groceryExists) {
+      throw new NotFoundException(`The grocery with ID ${id} does not exist.`);
+    }
+    this.groceries = this.groceries.filter((grocery) => grocery.id !== id);
   }
 }
