@@ -21,7 +21,7 @@ export class GroceriesController {
   constructor(private readonly groceriesService: GroceriesService) {}
 
   @Get()
-  getAllGroceries(): Groceries[] {
+  getAllGroceries(): Promise<Groceries[]> {
     return this.groceriesService.getAllGroceries();
   }
 
@@ -33,7 +33,7 @@ export class GroceriesController {
   }
 
   @Get('/:id')
-  getGrocery(@Param('id') id: string): Groceries {
+  getGrocery(@Param('id') id: string): Promise<Groceries> {
     return this.groceriesService.getGrocery(id);
   }
 
@@ -42,27 +42,27 @@ export class GroceriesController {
     return this.groceriesService.removeGrocery(id);
   }
 
-  @Patch('/:id/name')
-  updateGroceryName(
-    @Param('id') id: string,
-    @Body() updateGroceryNameDto: UpdateGroceryNameDto,
-  ): Groceries {
-    return this.groceriesService.updateGrocery(id, updateGroceryNameDto);
-  }
+  // @Patch('/:id/name')
+  // updateGroceryName(
+  //   @Param('id') id: string,
+  //   @Body() updateGroceryNameDto: UpdateGroceryNameDto,
+  // ): Groceries {
+  //   return this.groceriesService.updateGrocery(id, updateGroceryNameDto);
+  // }
 
-  @Patch('/:id/quantity')
-  updateGroceryQuantity(
-    @Param('id') id: string,
-    @Body() updateGroceryQuantityDto: UpdateGroceryQuantityDto,
-  ): Groceries {
-    return this.groceriesService.updateGrocery(id, updateGroceryQuantityDto);
-  }
+  // @Patch('/:id/quantity')
+  // updateGroceryQuantity(
+  //   @Param('id') id: string,
+  //   @Body() updateGroceryQuantityDto: UpdateGroceryQuantityDto,
+  // ): Groceries {
+  //   return this.groceriesService.updateGrocery(id, updateGroceryQuantityDto);
+  // }
 
-  @Patch('/:id/category')
-  updateGroceryCategory(
-    @Param('id') id: string,
-    @Body() updateGroceryCategoryDto: UpdateGroceryCategoryDto,
-  ): Groceries {
-    return this.groceriesService.updateGrocery(id, updateGroceryCategoryDto);
-  }
+  // @Patch('/:id/category')
+  // updateGroceryCategory(
+  //   @Param('id') id: string,
+  //   @Body() updateGroceryCategoryDto: UpdateGroceryCategoryDto,
+  // ): Groceries {
+  //   return this.groceriesService.updateGrocery(id, updateGroceryCategoryDto);
+  // }
 }

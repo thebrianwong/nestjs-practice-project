@@ -11,6 +11,10 @@ export class GroceriesRepository {
     private readonly groceriesEntityRepository: Repository<Groceries>,
   ) {}
 
+  async getAllGroceries(): Promise<Groceries[]> {
+    return await this.groceriesEntityRepository.find({});
+  }
+
   async createNewGrocery(
     createGroceriesDto: CreateGroceriesDto,
   ): Promise<Groceries> {
@@ -22,5 +26,16 @@ export class GroceriesRepository {
     });
     await this.groceriesEntityRepository.save(grocery);
     return grocery;
+  }
+
+  async getGrocery(id: string): Promise<Groceries> {
+    try {
+      const targetGrocery = await this.groceriesEntityRepository.findOne({
+        where: { id },
+      });
+      return targetGrocery;
+    } catch (err) {
+      console.log(`There was an error querying the database: ${err.message}`);
+    }
   }
 }
