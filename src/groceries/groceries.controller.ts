@@ -19,7 +19,6 @@ export class GroceriesController {
 
   @Get('/:id')
   getGrocery(@Param('id') id: string): Groceries {
-    console.log(id);
     return this.groceriesService.getGrocery(id);
   }
 

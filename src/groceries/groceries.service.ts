@@ -35,7 +35,11 @@ export class GroceriesService {
   }
 
   getGrocery(id: string): Groceries {
-    return this.groceries.find((grocery) => grocery.id === id);
+    const targetGrocery = this.groceries.find((grocery) => grocery.id === id);
+    if (targetGrocery) {
+      return targetGrocery;
+    }
+    throw new NotFoundException(`The grocery with ID ${id} does not exist.`);
   }
 
   removeGrocery(id: string): void {
