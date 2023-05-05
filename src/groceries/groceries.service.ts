@@ -7,6 +7,10 @@ import { Groceries } from './groceries.model';
 import { GroceriesCategory } from './groceries-category.enum';
 import { CreateGroceriesDto } from './dto/create-groceries.dto';
 import { v4 as randomID } from 'uuid';
+import {
+  UpdateGroceryNameDto,
+  UpdateGroceryQuantityDto,
+} from './dto/update-groceries.dto';
 
 @Injectable()
 export class GroceriesService {
@@ -47,19 +51,26 @@ export class GroceriesService {
     this.groceries = this.groceries.filter((grocery) => grocery.id !== id);
   }
 
-  updateGroceryName(id: string, newName: string): Groceries {
+  updateGroceryName(
+    id: string,
+    updateGroceryNameDto: UpdateGroceryNameDto,
+  ): Groceries {
+    const { name: newName } = updateGroceryNameDto;
     const targetGrocery = this.getGrocery(id);
     targetGrocery.name = newName;
     return targetGrocery;
   }
 
-  updateGroceryQuantity(id: string, newQuantity: string): Groceries {
-    const newQuantityFormatted = Number(newQuantity);
-    if (Number.isNaN(newQuantityFormatted) || newQuantityFormatted <= 0) {
+  updateGroceryQuantity(
+    id: string,
+    updateGroceryQuantityDto: UpdateGroceryQuantityDto,
+  ): Groceries {
+    const newQuantity = Number(updateGroceryQuantityDto.quantity);
+    if (Number.isNaN(newQuantity) || newQuantity <= 0) {
       throw new BadRequestException('That is not a valid quantity.');
     }
     const targetGrocery = this.getGrocery(id);
-    targetGrocery.quantity = newQuantityFormatted;
+    targetGrocery.quantity = newQuantity;
     return targetGrocery;
   }
 }

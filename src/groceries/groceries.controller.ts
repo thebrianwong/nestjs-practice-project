@@ -10,6 +10,10 @@ import {
 import { GroceriesService } from './groceries.service';
 import { Groceries } from './groceries.model';
 import { CreateGroceriesDto } from './dto/create-groceries.dto';
+import {
+  UpdateGroceryNameDto,
+  UpdateGroceryQuantityDto,
+} from './dto/update-groceries.dto';
 
 @Controller('groceries')
 export class GroceriesController {
@@ -38,16 +42,19 @@ export class GroceriesController {
   @Patch('/:id/name')
   updateGroceryName(
     @Param('id') id: string,
-    @Body('name') newName: string,
+    @Body() updateGroceryNameDto: UpdateGroceryNameDto,
   ): Groceries {
-    return this.groceriesService.updateGroceryName(id, newName);
+    return this.groceriesService.updateGroceryName(id, updateGroceryNameDto);
   }
 
   @Patch('/:id/quantity')
   updateGroceryQuantity(
     @Param('id') id: string,
-    @Body('quantity') newQuantity: string,
+    @Body() updateGroceryQuantityDto: UpdateGroceryQuantityDto,
   ): Groceries {
-    return this.groceriesService.updateGroceryQuantity(id, newQuantity);
+    return this.groceriesService.updateGroceryQuantity(
+      id,
+      updateGroceryQuantityDto,
+    );
   }
 }
