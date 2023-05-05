@@ -1,10 +1,5 @@
-import {
-  BadRequestException,
-  Injectable,
-  NotFoundException,
-} from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { Groceries } from './groceries.model';
-import { GroceriesCategory } from './groceries-category.enum';
 import { CreateGroceriesDto } from './dto/create-groceries.dto';
 import { v4 as randomID } from 'uuid';
 import {
