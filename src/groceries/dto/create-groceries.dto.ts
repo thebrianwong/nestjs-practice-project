@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsNumber } from 'class-validator';
+import { IsEnum, IsNotEmpty, IsNumber } from 'class-validator';
 import { GroceriesCategory } from '../groceries-category.enum';
 
 export class CreateGroceriesDto {
@@ -10,5 +10,6 @@ export class CreateGroceriesDto {
   quantity: number;
 
   @IsNotEmpty()
+  @IsEnum(GroceriesCategory)
   category: GroceriesCategory;
 }
