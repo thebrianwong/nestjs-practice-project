@@ -8,6 +8,7 @@ import {
   UpdateGroceryQuantityDto,
 } from './dto/update-groceries.dto';
 import { GroceriesRepository } from './groceries.repository';
+import { GroceriesIdDto } from './dto/groceries-id.dto';
 
 @Injectable()
 export class GroceriesService {
@@ -16,24 +17,28 @@ export class GroceriesService {
   constructor(private groceriesEntityRepository: GroceriesRepository) {}
 
   async getAllGroceries(): Promise<Groceries[]> {
-    return this.groceriesEntityRepository.getAllGroceries();
+    return this.groceriesEntityRepository.getAllGroceriesFromDb();
   }
 
   async createNewGrocery(
     createGroceriesDto: CreateGroceriesDto,
   ): Promise<Groceries> {
-    return this.groceriesEntityRepository.createNewGrocery(createGroceriesDto);
+    return this.groceriesEntityRepository.saveGroceryToDb(createGroceriesDto);
   }
 
-  async getGrocery(id: string): Promise<Groceries> {
-    const targetGrocery = await this.groceriesEntityRepository.getGrocery(id);
+  async getGrocery(groceriesIdDto: GroceriesIdDto): Promise<Groceries> {
+    const { id } = groceriesIdDto;
+    const targetGrocery = await this.groceriesEntityRepository.findGroceryInDb(
+      id,
+    );
     if (targetGrocery) {
       return targetGrocery;
     }
     throw new NotFoundException(`The grocery with ID ${id} does not exist.`);
   }
 
-  async removeGrocery(id: string): Promise<void> {
+  async removeGrocery(groceriesIdDto: GroceriesIdDto): Promise<void> {
+    const { id } = groceriesIdDto;
     const deletedGrocery =
       await this.groceriesEntityRepository.deleteGroceryFromDb(id);
     if (!deletedGrocery) {

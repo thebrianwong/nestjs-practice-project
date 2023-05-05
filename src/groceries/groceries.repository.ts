@@ -11,11 +11,11 @@ export class GroceriesRepository {
     private readonly groceriesEntityRepository: Repository<Groceries>,
   ) {}
 
-  async getAllGroceries(): Promise<Groceries[]> {
+  async getAllGroceriesFromDb(): Promise<Groceries[]> {
     return await this.groceriesEntityRepository.find({});
   }
 
-  async createNewGrocery(
+  async saveGroceryToDb(
     createGroceriesDto: CreateGroceriesDto,
   ): Promise<Groceries> {
     const { name, quantity, category } = createGroceriesDto;
@@ -28,23 +28,14 @@ export class GroceriesRepository {
     return grocery;
   }
 
-  async getGrocery(id: string): Promise<Groceries> {
-    try {
-      const targetGrocery = await this.groceriesEntityRepository.findOne({
-        where: { id },
-      });
-      return targetGrocery;
-    } catch (err) {
-      console.log(`There was an error querying the database: ${err.message}`);
-    }
+  async findGroceryInDb(id: string): Promise<Groceries> {
+    return await this.groceriesEntityRepository.findOne({
+      where: { id },
+    });
   }
 
   async deleteGroceryFromDb(id: string): Promise<number> {
-    try {
-      const grocery = await this.groceriesEntityRepository.delete({ id });
-      return grocery.affected;
-    } catch (err) {
-      console.log(`There was an error querying the database: ${err.message}`);
-    }
+    const deletionResults = await this.groceriesEntityRepository.delete({ id });
+    return deletionResults.affected;
   }
 }

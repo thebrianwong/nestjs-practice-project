@@ -15,6 +15,7 @@ import {
   UpdateGroceryNameDto,
   UpdateGroceryQuantityDto,
 } from './dto/update-groceries.dto';
+import { GroceriesIdDto } from './dto/groceries-id.dto';
 
 @Controller('groceries')
 export class GroceriesController {
@@ -33,13 +34,13 @@ export class GroceriesController {
   }
 
   @Get('/:id')
-  getGrocery(@Param('id') id: string): Promise<Groceries> {
-    return this.groceriesService.getGrocery(id);
+  getGrocery(@Param() groceriesIdDto: GroceriesIdDto): Promise<Groceries> {
+    return this.groceriesService.getGrocery(groceriesIdDto);
   }
 
   @Delete('/:id')
-  removeGrocery(@Param('id') id: string): Promise<void> {
-    return this.groceriesService.removeGrocery(id);
+  removeGrocery(@Param() groceriesIdDto: GroceriesIdDto): Promise<void> {
+    return this.groceriesService.removeGrocery(groceriesIdDto);
   }
 
   // @Patch('/:id/name')
