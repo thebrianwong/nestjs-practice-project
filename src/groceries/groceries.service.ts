@@ -49,4 +49,20 @@ export class GroceriesService {
     }
     this.groceries = this.groceries.filter((grocery) => grocery.id !== id);
   }
+
+  updateGroceryName(id: string, newName: string): Groceries {
+    const targetGrocery = this.getGrocery(id);
+    targetGrocery.name = newName;
+    return targetGrocery;
+  }
+
+  updateGroceryQuantity(id: string, newQuantity: string): Groceries {
+    const newQuantityFormatted = Number(newQuantity);
+    if (Number.isNaN(newQuantityFormatted) || newQuantityFormatted <= 0) {
+      throw new BadRequestException('That is not a valid quantity.');
+    }
+    const targetGrocery = this.getGrocery(id);
+    targetGrocery.quantity = newQuantityFormatted;
+    return targetGrocery;
+  }
 }

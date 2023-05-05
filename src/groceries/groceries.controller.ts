@@ -1,4 +1,12 @@
-import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
+} from '@nestjs/common';
 import { GroceriesService } from './groceries.service';
 import { Groceries } from './groceries.model';
 import { CreateGroceriesDto } from './dto/create-groceries.dto';
@@ -25,5 +33,21 @@ export class GroceriesController {
   @Delete('/:id')
   removeGrocery(@Param('id') id: string): void {
     return this.groceriesService.removeGrocery(id);
+  }
+
+  @Patch('/:id/name')
+  updateGroceryName(
+    @Param('id') id: string,
+    @Body('name') newName: string,
+  ): Groceries {
+    return this.groceriesService.updateGroceryName(id, newName);
+  }
+
+  @Patch('/:id/quantity')
+  updateGroceryQuantity(
+    @Param('id') id: string,
+    @Body('quantity') newQuantity: string,
+  ): Groceries {
+    return this.groceriesService.updateGroceryQuantity(id, newQuantity);
   }
 }
