@@ -1,32 +1,26 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { Groceries } from './groceries.model';
+import { Groceries } from './groceries.entity';
 import { CreateGroceriesDto } from './dto/create-groceries.dto';
-import { v4 as randomID } from 'uuid';
 import {
   UpdateDto,
   UpdateGroceryCategoryDto,
   UpdateGroceryNameDto,
   UpdateGroceryQuantityDto,
 } from './dto/update-groceries.dto';
+import { GroceriesRepository } from './groceries.repository';
 
 @Injectable()
 export class GroceriesService {
   groceries: Groceries[] = [];
 
+  constructor(private groceriesEntityRepository: GroceriesRepository) {}
+
   getAllGroceries(): Groceries[] {
     return this.groceries;
   }
 
-  createNewGrocery(createGroceriesDto: CreateGroceriesDto): Groceries {
-    const { name, quantity, category } = createGroceriesDto;
-    const grocery = {
-      id: randomID(),
-      name,
-      quantity,
-      category,
-    };
-    this.groceries.push(grocery);
-    return grocery;
+  createNewGrocery(createGroceriesDto: CreateGroceriesDto): Promise<Groceries> {
+    return this.groceriesEntityRepository.createNewGrocery(createGroceriesDto);
   }
 
   getGrocery(id: string): Groceries {

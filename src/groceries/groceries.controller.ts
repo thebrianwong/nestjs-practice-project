@@ -8,7 +8,7 @@ import {
   Post,
 } from '@nestjs/common';
 import { GroceriesService } from './groceries.service';
-import { Groceries } from './groceries.model';
+import { Groceries } from './groceries.entity';
 import { CreateGroceriesDto } from './dto/create-groceries.dto';
 import {
   UpdateGroceryCategoryDto,
@@ -26,7 +26,9 @@ export class GroceriesController {
   }
 
   @Post('/new')
-  createNewGrocery(@Body() createGroceriesDto: CreateGroceriesDto): Groceries {
+  createNewGrocery(
+    @Body() createGroceriesDto: CreateGroceriesDto,
+  ): Promise<Groceries> {
     return this.groceriesService.createNewGrocery(createGroceriesDto);
   }
 
