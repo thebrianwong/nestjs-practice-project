@@ -13,7 +13,8 @@ export class GroceriesService {
   }
 
   createNewGrocery(createGroceriesDto: CreateGroceriesDto): Groceries {
-    const { name, quantity, category } = createGroceriesDto;
+    const { name, category } = createGroceriesDto;
+    const quantity = Number(createGroceriesDto.quantity);
     if (
       !Object.values(GroceriesCategory).includes(GroceriesCategory[category])
     ) {
