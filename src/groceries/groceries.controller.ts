@@ -45,7 +45,7 @@ export class GroceriesController {
     @Param('id') id: string,
     @Body() updateGroceryNameDto: UpdateGroceryNameDto,
   ): Groceries {
-    return this.groceriesService.updateGroceryName(id, updateGroceryNameDto);
+    return this.groceriesService.updateGrocery(id, updateGroceryNameDto);
   }
 
   @Patch('/:id/quantity')
@@ -53,10 +53,7 @@ export class GroceriesController {
     @Param('id') id: string,
     @Body() updateGroceryQuantityDto: UpdateGroceryQuantityDto,
   ): Groceries {
-    return this.groceriesService.updateGroceryQuantity(
-      id,
-      updateGroceryQuantityDto,
-    );
+    return this.groceriesService.updateGrocery(id, updateGroceryQuantityDto);
   }
 
   @Patch('/:id/category')
@@ -64,9 +61,6 @@ export class GroceriesController {
     @Param('id') id: string,
     @Body() updateGroceryCategoryDto: UpdateGroceryCategoryDto,
   ): Groceries {
-    return this.groceriesService.updateGroceryCategory(
-      id,
-      updateGroceryCategoryDto,
-    );
+    return this.groceriesService.updateGrocery(id, updateGroceryCategoryDto);
   }
 }

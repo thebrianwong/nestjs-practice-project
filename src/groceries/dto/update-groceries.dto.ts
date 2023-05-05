@@ -22,3 +22,8 @@ export class UpdateGroceryCategoryDto {
   @IsEnum(GroceriesCategory)
   category: GroceriesCategory;
 }
+
+export type UpdateDto =
+  | UpdateGroceryNameDto
+  | UpdateGroceryQuantityDto
+  | UpdateGroceryCategoryDto;

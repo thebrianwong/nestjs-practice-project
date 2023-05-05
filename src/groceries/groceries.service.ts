@@ -3,6 +3,7 @@ import { Groceries } from './groceries.model';
 import { CreateGroceriesDto } from './dto/create-groceries.dto';
 import { v4 as randomID } from 'uuid';
 import {
+  UpdateDto,
   UpdateGroceryCategoryDto,
   UpdateGroceryNameDto,
   UpdateGroceryQuantityDto,
@@ -41,33 +42,15 @@ export class GroceriesService {
     this.groceries = this.groceries.filter((grocery) => grocery.id !== id);
   }
 
-  updateGroceryName(
-    id: string,
-    updateGroceryNameDto: UpdateGroceryNameDto,
-  ): Groceries {
-    const { name: newName } = updateGroceryNameDto;
+  updateGrocery(id: string, updateDto: UpdateDto): Groceries {
     const targetGrocery = this.getGrocery(id);
-    targetGrocery.name = newName;
-    return targetGrocery;
-  }
-
-  updateGroceryQuantity(
-    id: string,
-    updateGroceryQuantityDto: UpdateGroceryQuantityDto,
-  ): Groceries {
-    const { quantity: newQuantity } = updateGroceryQuantityDto;
-    const targetGrocery = this.getGrocery(id);
-    targetGrocery.quantity = newQuantity;
-    return targetGrocery;
-  }
-
-  updateGroceryCategory(
-    id: string,
-    updateGroceryCategoryDto: UpdateGroceryCategoryDto,
-  ): Groceries {
-    const { category: newCategory } = updateGroceryCategoryDto;
-    const targetGrocery = this.getGrocery(id);
-    targetGrocery.category = newCategory;
+    if (updateDto instanceof UpdateGroceryNameDto) {
+      targetGrocery.name = updateDto.name;
+    } else if (updateDto instanceof UpdateGroceryQuantityDto) {
+      targetGrocery.quantity = updateDto.quantity;
+    } else if (updateDto instanceof UpdateGroceryCategoryDto) {
+      targetGrocery.category = updateDto.category;
+    }
     return targetGrocery;
   }
 }
