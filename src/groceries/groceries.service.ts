@@ -22,18 +22,12 @@ export class GroceriesService {
   }
 
   createNewGrocery(createGroceriesDto: CreateGroceriesDto): Groceries {
-    const { name, category } = createGroceriesDto;
-    const quantity = Number(createGroceriesDto.quantity);
-    if (
-      !Object.values(GroceriesCategory).includes(GroceriesCategory[category])
-    ) {
-      throw new BadRequestException("That's not a valid category!");
-    }
+    const { name, quantity, category } = createGroceriesDto;
     const grocery = {
       id: randomID(),
       name,
       quantity,
-      category: GroceriesCategory[category],
+      category,
     };
     this.groceries.push(grocery);
     return grocery;
@@ -66,7 +60,7 @@ export class GroceriesService {
     id: string,
     updateGroceryQuantityDto: UpdateGroceryQuantityDto,
   ): Groceries {
-    const newQuantity = Number(updateGroceryQuantityDto.quantity);
+    const { quantity: newQuantity } = updateGroceryQuantityDto;
     if (Number.isNaN(newQuantity) || newQuantity <= 0) {
       throw new BadRequestException('That is not a valid quantity.');
     }
@@ -80,13 +74,8 @@ export class GroceriesService {
     updateGroceryCategoryDto: UpdateGroceryCategoryDto,
   ): Groceries {
     const { category: newCategory } = updateGroceryCategoryDto;
-    if (
-      !Object.values(GroceriesCategory).includes(GroceriesCategory[newCategory])
-    ) {
-      throw new BadRequestException("That's not a valid category!");
-    }
     const targetGrocery = this.getGrocery(id);
-    targetGrocery.category = GroceriesCategory[newCategory];
+    targetGrocery.category = newCategory;
     return targetGrocery;
   }
 }
