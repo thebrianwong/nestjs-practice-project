@@ -1,4 +1,4 @@
-import { IsEnum, IsNotEmpty, IsNumber } from 'class-validator';
+import { IsEnum, IsNotEmpty, IsNumber, Min } from 'class-validator';
 import { GroceriesCategory } from '../groceries-category.enum';
 import { Transform } from 'class-transformer';
 
@@ -8,6 +8,7 @@ export class CreateGroceriesDto {
 
   @IsNotEmpty()
   @IsNumber()
+  @Min(1)
   @Transform(({ value }) => {
     return Number(value);
   })

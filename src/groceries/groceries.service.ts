@@ -61,9 +61,6 @@ export class GroceriesService {
     updateGroceryQuantityDto: UpdateGroceryQuantityDto,
   ): Groceries {
     const { quantity: newQuantity } = updateGroceryQuantityDto;
-    if (Number.isNaN(newQuantity) || newQuantity <= 0) {
-      throw new BadRequestException('That is not a valid quantity.');
-    }
     const targetGrocery = this.getGrocery(id);
     targetGrocery.quantity = newQuantity;
     return targetGrocery;
