@@ -33,9 +33,12 @@ export class GroceriesService {
     throw new NotFoundException(`The grocery with ID ${id} does not exist.`);
   }
 
-  removeGrocery(id: string): void {
-    const groceryExists = this.getGrocery(id);
-    this.groceries = this.groceries.filter((grocery) => grocery.id !== id);
+  async removeGrocery(id: string): Promise<void> {
+    const deletedGrocery =
+      await this.groceriesEntityRepository.deleteGroceryFromDb(id);
+    if (!deletedGrocery) {
+      throw new NotFoundException(`The grocery with ID ${id} does not exist.`);
+    }
   }
 
   // updateGrocery(id: string, updateDto: UpdateDto): Groceries {

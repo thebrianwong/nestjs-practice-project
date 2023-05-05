@@ -38,7 +38,7 @@ export class GroceriesController {
   }
 
   @Delete('/:id')
-  removeGrocery(@Param('id') id: string): void {
+  removeGrocery(@Param('id') id: string): Promise<void> {
     return this.groceriesService.removeGrocery(id);
   }
 

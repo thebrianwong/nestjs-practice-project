@@ -38,4 +38,13 @@ export class GroceriesRepository {
       console.log(`There was an error querying the database: ${err.message}`);
     }
   }
+
+  async deleteGroceryFromDb(id: string): Promise<number> {
+    try {
+      const grocery = await this.groceriesEntityRepository.delete({ id });
+      return grocery.affected;
+    } catch (err) {
+      console.log(`There was an error querying the database: ${err.message}`);
+    }
+  }
 }
