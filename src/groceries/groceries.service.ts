@@ -32,7 +32,7 @@ export class GroceriesService {
       id: randomID(),
       name,
       quantity,
-      category,
+      category: GroceriesCategory[category],
     };
     this.groceries.push(grocery);
     return grocery;
