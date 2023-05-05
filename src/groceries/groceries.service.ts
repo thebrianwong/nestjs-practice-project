@@ -8,6 +8,7 @@ import { GroceriesCategory } from './groceries-category.enum';
 import { CreateGroceriesDto } from './dto/create-groceries.dto';
 import { v4 as randomID } from 'uuid';
 import {
+  UpdateGroceryCategoryDto,
   UpdateGroceryNameDto,
   UpdateGroceryQuantityDto,
 } from './dto/update-groceries.dto';
@@ -71,6 +72,21 @@ export class GroceriesService {
     }
     const targetGrocery = this.getGrocery(id);
     targetGrocery.quantity = newQuantity;
+    return targetGrocery;
+  }
+
+  updateGroceryCategory(
+    id: string,
+    updateGroceryCategoryDto: UpdateGroceryCategoryDto,
+  ): Groceries {
+    const { category: newCategory } = updateGroceryCategoryDto;
+    if (
+      !Object.values(GroceriesCategory).includes(GroceriesCategory[newCategory])
+    ) {
+      throw new BadRequestException("That's not a valid category!");
+    }
+    const targetGrocery = this.getGrocery(id);
+    targetGrocery.category = GroceriesCategory[newCategory];
     return targetGrocery;
   }
 }

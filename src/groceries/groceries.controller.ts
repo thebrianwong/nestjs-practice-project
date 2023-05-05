@@ -11,6 +11,7 @@ import { GroceriesService } from './groceries.service';
 import { Groceries } from './groceries.model';
 import { CreateGroceriesDto } from './dto/create-groceries.dto';
 import {
+  UpdateGroceryCategoryDto,
   UpdateGroceryNameDto,
   UpdateGroceryQuantityDto,
 } from './dto/update-groceries.dto';
@@ -55,6 +56,17 @@ export class GroceriesController {
     return this.groceriesService.updateGroceryQuantity(
       id,
       updateGroceryQuantityDto,
+    );
+  }
+
+  @Patch('/:id/category')
+  updateGroceryCategory(
+    @Param('id') id: string,
+    @Body() updateGroceryCategoryDto: UpdateGroceryCategoryDto,
+  ): Groceries {
+    return this.groceriesService.updateGroceryCategory(
+      id,
+      updateGroceryCategoryDto,
     );
   }
 }
