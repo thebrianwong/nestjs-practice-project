@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { GroceriesService } from './groceries.service';
 import { Groceries } from './groceries.model';
 import { CreateGroceriesDto } from './dto/create-groceries.dto';
@@ -15,5 +15,11 @@ export class GroceriesController {
   @Post('/new')
   createNewGrocery(@Body() createGroceriesDto: CreateGroceriesDto): Groceries {
     return this.groceriesService.createNewGrocery(createGroceriesDto);
+  }
+
+  @Get('/:id')
+  getGrocery(@Param('id') id: string): Groceries {
+    console.log(id);
+    return this.groceriesService.getGrocery(id);
   }
 }

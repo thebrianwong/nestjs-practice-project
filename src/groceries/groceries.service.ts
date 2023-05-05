@@ -29,4 +29,8 @@ export class GroceriesService {
     this.groceries.push(grocery);
     return grocery;
   }
+
+  getGrocery(id: string): Groceries {
+    return this.groceries.find((grocery) => grocery.id === id);
+  }
 }
