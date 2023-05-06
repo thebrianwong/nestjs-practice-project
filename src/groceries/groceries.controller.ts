@@ -43,27 +43,36 @@ export class GroceriesController {
     return this.groceriesService.removeGrocery(groceriesIdDto);
   }
 
-  // @Patch('/:id/name')
-  // updateGroceryName(
-  //   @Param('id') id: string,
-  //   @Body() updateGroceryNameDto: UpdateGroceryNameDto,
-  // ): Groceries {
-  //   return this.groceriesService.updateGrocery(id, updateGroceryNameDto);
-  // }
+  @Patch('/:id/name')
+  updateGroceryName(
+    @Param() groceriesIdDto: GroceriesIdDto,
+    @Body() updateGroceryNameDto: UpdateGroceryNameDto,
+  ): Promise<Groceries> {
+    return this.groceriesService.updateGrocery(
+      groceriesIdDto,
+      updateGroceryNameDto,
+    );
+  }
 
-  // @Patch('/:id/quantity')
-  // updateGroceryQuantity(
-  //   @Param('id') id: string,
-  //   @Body() updateGroceryQuantityDto: UpdateGroceryQuantityDto,
-  // ): Groceries {
-  //   return this.groceriesService.updateGrocery(id, updateGroceryQuantityDto);
-  // }
+  @Patch('/:id/quantity')
+  updateGroceryQuantity(
+    @Param() groceriesIdDto: GroceriesIdDto,
+    @Body() updateGroceryQuantityDto: UpdateGroceryQuantityDto,
+  ): Promise<Groceries> {
+    return this.groceriesService.updateGrocery(
+      groceriesIdDto,
+      updateGroceryQuantityDto,
+    );
+  }
 
-  // @Patch('/:id/category')
-  // updateGroceryCategory(
-  //   @Param('id') id: string,
-  //   @Body() updateGroceryCategoryDto: UpdateGroceryCategoryDto,
-  // ): Groceries {
-  //   return this.groceriesService.updateGrocery(id, updateGroceryCategoryDto);
-  // }
+  @Patch('/:id/category')
+  updateGroceryCategory(
+    @Param() groceriesIdDto: GroceriesIdDto,
+    @Body() updateGroceryCategoryDto: UpdateGroceryCategoryDto,
+  ): Promise<Groceries> {
+    return this.groceriesService.updateGrocery(
+      groceriesIdDto,
+      updateGroceryCategoryDto,
+    );
+  }
 }

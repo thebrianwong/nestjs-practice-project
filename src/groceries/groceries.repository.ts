@@ -38,4 +38,8 @@ export class GroceriesRepository {
     const deletionResults = await this.groceriesEntityRepository.delete({ id });
     return deletionResults.affected;
   }
+
+  async updateGroceryInDb(grocery: Groceries): Promise<void> {
+    this.groceriesEntityRepository.save(grocery);
+  }
 }

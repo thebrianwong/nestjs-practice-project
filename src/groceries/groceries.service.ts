@@ -46,15 +46,19 @@ export class GroceriesService {
     }
   }
 
-  // updateGrocery(id: string, updateDto: UpdateDto): Groceries {
-  //   const targetGrocery = this.getGrocery(id);
-  //   if (updateDto instanceof UpdateGroceryNameDto) {
-  //     targetGrocery.name = updateDto.name;
-  //   } else if (updateDto instanceof UpdateGroceryQuantityDto) {
-  //     targetGrocery.quantity = updateDto.quantity;
-  //   } else if (updateDto instanceof UpdateGroceryCategoryDto) {
-  //     targetGrocery.category = updateDto.category;
-  //   }
-  //   return targetGrocery;
-  // }
+  async updateGrocery(
+    groceriesIdDto: GroceriesIdDto,
+    updateDto: UpdateDto,
+  ): Promise<Groceries> {
+    const targetGrocery = await this.getGrocery(groceriesIdDto);
+    if (updateDto instanceof UpdateGroceryNameDto) {
+      targetGrocery.name = updateDto.name;
+    } else if (updateDto instanceof UpdateGroceryQuantityDto) {
+      targetGrocery.quantity = updateDto.quantity;
+    } else if (updateDto instanceof UpdateGroceryCategoryDto) {
+      targetGrocery.category = updateDto.category;
+    }
+    await this.groceriesEntityRepository.updateGroceryInDb(targetGrocery);
+    return targetGrocery;
+  }
 }
